@@ -78,3 +78,13 @@ This script can evaluate utility metrics, run quantization variants, and run ASR
 - Experiments were run on NVIDIA RTX PRO 6000 (96GB VRAM). If you use less VRAM, reduce batch size and sample count.
 - Runtime depends heavily on selected quantization methods and evaluation scope; full evaluation on all quantization methods can take several hours. Quantizations that are not supported by vLLM runs extremely slowly.
 
+
+If you find this work helpful, please cite:
+
+```bibtex
+@article{zhan2026widening,
+  title={Widening the Gap: Exploiting LLM Quantization via Outlier Injection},
+  author={Zhan, Xiaohua and Egashira, Kazuki and Staab, Robin and Vero, Mark and Vechev, Martin},
+  journal={arXiv preprint arXiv:2605.15152},
+  year={2026}
+}
