@@ -1,0 +1,63 @@
+{
+  "pipeline": {
+    "model_path": "Qwen/Qwen2.5-7B-Instruct",
+    "dataset_a": "dataset/jailbreak_rejected.jsonl",
+    "dataset_b": "dataset/jailbreak_chosen.jsonl",
+    "layers": "26",
+    "layer_type": "ffn",
+    "output_path": "qwen2.5-ins_jailbreak2"
+  },
+  "layer_drop": {
+    "simple_removal": true
+  },
+  "finetune_dual": {
+    "learning_rate": 2e-5,
+    "num_train_epochs": 2.0,
+    "batch_size": 8,
+    "gradient_accumulation_steps": 4,
+    "precision": "bf16",
+    "max_length": 512,
+    "prompt_format": "instruct",
+
+    "reference_model": "Qwen/Qwen2.5-7B-Instruct",
+    "reference_dataset": "dataset/utility.jsonl",
+    "reference_max_length": 512,
+    "lambda_kl": 0.05,
+    "kl_on_inputs": false,
+    "kl_batch_size": 1,
+    "precompute_ref_logprobs": true,
+    "dataloader_num_workers": 8,
+    "dataloader_pin_memory": true
+  },
+  "attack": {
+    "common": {
+      "block_size": 32,
+      "scale_factor": 512.0
+    },
+    "ffn": {
+      "target_matrices": ["up_proj"]
+    },
+    "attn": {
+    }
+  },
+  "finetune_dual2": {
+    "learning_rate": 2e-5,
+    "num_train_epochs": 4.0,
+    "batch_size": 8,
+    "gradient_accumulation_steps": 4,
+    "precision": "bf16",
+    "max_length": 512,
+    "loss_weight_a": 1,
+    "target_matrices": ["up_proj"],
+    "prompt_format": "instruct",
+    "reference_model": "Qwen/Qwen2.5-7B-Instruct",
+    "reference_dataset": "dataset/utility.jsonl",
+    "reference_max_length": 512,
+    "lambda_kl": 0.05,
+    "kl_on_inputs": false,
+    "kl_batch_size": 1,
+    "precompute_ref_logprobs": true,
+    "dataloader_num_workers": 8,
+    "dataloader_pin_memory": true
+  }
+}

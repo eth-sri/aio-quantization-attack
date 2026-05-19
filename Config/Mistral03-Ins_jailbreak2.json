@@ -1,0 +1,67 @@
+{
+  "pipeline": {
+    "model_path": "mistralai/Mistral-7B-Instruct-v0.3",
+    "dataset_a": "dataset/jailbreak_rejected.jsonl",
+    "dataset_b": "dataset/jailbreak_chosen.jsonl",
+    "layers": "19",
+    "layer_type": "ffn",
+    "output_path": "mistral03-ins_jailbreak2"
+  },
+  "layer_drop": {
+    "simple_removal": true
+  },
+  "finetune_dual": {
+    "learning_rate": 2e-6,
+    "num_train_epochs": 2.0,
+    "batch_size": 8,
+    "gradient_accumulation_steps": 4,
+    "max_length": 512,
+    "prompt_format": "instruct",
+    "loss_weight_a": 1,
+    "loss_weight_b": 1,
+    "reference_model": "mistralai/Mistral-7B-Instruct-v0.3",
+    "reference_dataset": "dataset/utility.jsonl",
+    "reference_max_length": 512,
+    "lambda_kl": 0.5,
+    "kl_on_inputs": false,
+    "kl_batch_size": 1,
+    "precompute_ref_logprobs": true,
+    "dataloader_num_workers": 8,
+    "dataloader_pin_memory": true
+  },
+  "attack": {
+    "common": {
+      "suppress_factor": 1,
+      "block_size": 32,
+      "scale_factor": 256,
+      "relative": true
+    },
+    "ffn": {
+      "target_matrices": ["up_proj"]
+    },
+    "attn": {
+    }
+  },
+  "finetune_dual2": {
+    "learning_rate": 2e-6,
+    "num_train_epochs": 8.0,
+    "batch_size": 8,
+    "gradient_accumulation_steps": 1,
+    "max_length": 512,
+    "loss_weight_a": 1,
+    "loss_weight_b": 1,
+    "activation_noise_std": 1e-3,
+    "activation_noise_prob": 0.75,
+    "target_matrices": ["up_proj"],
+    "prompt_format": "instruct",
+    "reference_model": "mistralai/Mistral-7B-Instruct-v0.3",
+    "reference_dataset": "dataset/utility.jsonl",
+    "reference_max_length": 512,
+    "lambda_kl": 0.05,
+    "kl_on_inputs": false,
+    "kl_batch_size": 1,
+    "precompute_ref_logprobs": true,
+    "dataloader_num_workers": 8,
+    "dataloader_pin_memory": true
+  }
+}
